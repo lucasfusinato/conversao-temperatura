@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: conversao-temperatura
-        image: localhost:5000/kubedev/conversao-temperatura:1.0
+        image: lucasfusinato/conversao-temperatura:1.0
         ports:
         - containerPort: 8080
 ---
