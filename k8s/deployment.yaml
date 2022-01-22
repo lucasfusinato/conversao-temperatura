@@ -19,3 +19,7 @@ spec:
         image: lucasfusinato/conversao-temperatura:1.0
         ports:
         - containerPort: 8080
+        resources:
+          limits:
+            cpu: "120Mi"
+            memory: "500m"
