@@ -43,16 +43,10 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
 
-      - name: Set Deployment Namespace
-        uses: microsoft/variable-substitution@v1 
-        with:
-          files: 'k8s/deployment.yaml'
-        env:
-           metadata.namespace: ${{ secrets.K8S_NAMESPACE }}
-
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v1.5
         with:
+          namespace: ${{ secrets.K8S_NAMESPACE }}
           images: lucasfusinato/conversao-temperatura:${{ github.run_number }}
           manifests: |
             k8s/deployment.yaml
