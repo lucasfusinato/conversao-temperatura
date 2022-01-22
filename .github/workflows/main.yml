@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,3 +29,23 @@ jobs:
             lucasfusinato/conversao-temperatura:latest
             lucasfusinato/conversao-temperatura:${{ github.run_number }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+  cd:
+    needs: [ci]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Kubernetes Set Context
+        uses: Azure/k8s-set-context@v2
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
+          
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v1.5
+        with:
+          images: lucasfusinato/conversao-temperatura:${{ github.run_number }}
+          manifests: |
+            k8s/deployment.yaml
