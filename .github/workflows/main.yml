@@ -28,7 +28,6 @@ jobs:
           tags: |
             lucasfusinato/conversao-temperatura:latest
             lucasfusinato/conversao-temperatura:${{ github.run_number }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
   cd:
     needs: [ci]
